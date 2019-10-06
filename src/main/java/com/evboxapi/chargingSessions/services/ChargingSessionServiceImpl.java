@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.evboxapi.chargingSessions.models.ChargingSession;
 import com.evboxapi.chargingSessions.models.StatusEnum;
 
@@ -16,17 +18,24 @@ public class ChargingSessionServiceImpl implements ChargingSessionService{
 	
 	private final HashMap<UUID, ChargingSession> chargingSesssions = new HashMap<UUID, ChargingSession>();
 	
+	@Autowired
+	private DynamoDBMapper mapper;
+	
+	
 	@Override
 	public List<ChargingSession> findAll() {
 		List<ChargingSession> tempList = new ArrayList<ChargingSession>(this.chargingSesssions.values());
 		return tempList;
+		
 	}
 
 	@Override
 	public ChargingSession save(ChargingSession chargingSession) {
-		chargingSession.setId();
-		chargingSession.setStatus(StatusEnum.IN_PROGRESS);
-		chargingSesssions.put(chargingSession.getId(), chargingSession);
+		//chargingSession.setId();
+		//chargingSession.setStatus(StatusEnum.IN_PROGRESS);
+		//chargingSesssions.put(chargingSession.getId(), chargingSession);
+		
+		mapper.save(chargingSession);
 		return chargingSession;
 	}
 
