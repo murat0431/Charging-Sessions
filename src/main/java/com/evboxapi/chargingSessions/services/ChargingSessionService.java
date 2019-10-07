@@ -37,4 +37,6 @@ public interface ChargingSessionService {
 	 */
 	Optional<ChargingSession> update(UUID id);
 	
+	Optional<ChargingSession> findById(String id);
+	
 }

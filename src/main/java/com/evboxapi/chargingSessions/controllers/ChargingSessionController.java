@@ -34,7 +34,7 @@ public class ChargingSessionController {
 	 * 
 	 * @return ResponseEntity<List<ChargingSession>>
 	 */
-	@GetMapping("/chargingSessions")
+	@GetMapping("/users")
 	public ResponseEntity<List<ChargingSession>> getChargingSessions() {
 		return ResponseEntity.ok(this.chargingSessionService.findAll());
 	}
@@ -46,7 +46,7 @@ public class ChargingSessionController {
 	 * @return ResponseEntity<ChargingSession>
 	 */
 	
-	@PostMapping("/chargingSessions")
+	@PostMapping("/users")
 	public ResponseEntity<ChargingSession> addChargingSession(@RequestBody ChargingSession chargingSession) {
 		return ResponseEntity.ok(this.chargingSessionService.save(chargingSession));
 	} 
@@ -58,9 +58,18 @@ public class ChargingSessionController {
 	 * @return ResponseEntity
 	 */
 	
-	@PutMapping("/chargingSessions/{id}")
+	@PutMapping("/users/{id}")
 	public ResponseEntity<ChargingSession> updateChargingSession(@PathVariable UUID id) {
 		Optional<ChargingSession> ch = this.chargingSessionService.update(id);
+		if(!ch.isPresent()) {
+			throw new ChargingSessionNotFoundException();
+		}
+		return ResponseEntity.ok(ch.get());
+	}
+	
+	@GetMapping("/users/{id}")
+	public ResponseEntity<ChargingSession> getUserById(@PathVariable String id){
+		Optional<ChargingSession> ch = this.chargingSessionService.findById(id);
 		if(!ch.isPresent()) {
 			throw new ChargingSessionNotFoundException();
 		}

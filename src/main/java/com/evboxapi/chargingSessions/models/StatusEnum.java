@@ -7,5 +7,5 @@ package com.evboxapi.chargingSessions.models;
  *
  */
 public enum StatusEnum {
-	IN_PROGRESS, FINISHED
+	REJECTED, ACCEPTED, OFFERED
 }

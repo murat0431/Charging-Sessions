@@ -31,10 +31,6 @@ public class ChargingSessionServiceImpl implements ChargingSessionService{
 
 	@Override
 	public ChargingSession save(ChargingSession chargingSession) {
-		//chargingSession.setId();
-		//chargingSession.setStatus(StatusEnum.IN_PROGRESS);
-		//chargingSesssions.put(chargingSession.getId(), chargingSession);
-		
 		mapper.save(chargingSession);
 		return chargingSession;
 	}
@@ -45,10 +41,16 @@ public class ChargingSessionServiceImpl implements ChargingSessionService{
 		if(chargingSession == null) {
 			return Optional.empty();
 		} else {
-			chargingSession.setStatus(StatusEnum.FINISHED);
+			//chargingSession.setStatus(StatusEnum.FINISHED);
 			return Optional.of(chargingSession);
 		}
 				
+	}
+
+	@Override
+	public Optional<ChargingSession> findById(String id) {
+		ChargingSession cs = mapper.load(ChargingSession.class, id);
+		return Optional.of(cs);
 	}
 
 }
